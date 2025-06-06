@@ -1,0 +1,19 @@
+
+ VIDEO TESTING INSTRUCTIONS
+============================
+
+To test video/reel posting functionality:
+
+1. ADD VIDEOS TO TEST:
+    Place any cat videos (.mp4, .mov, .avi) in: user_content/videos/
+   
+2. VIDEO REQUIREMENTS:
+   - Format: MP4, MOV, AVI, MKV, WEBM
+   - Duration: 15-60 seconds (optimal for Instagram Reels)
+   - Resolution: 1080x1920 (vertical) or 1080x1080 (square)
+   - Size: Under 100MB
+
+3. TO RUN VIDEO TEST:
+   python test_video_posting.py
+
+Happy Testing! 

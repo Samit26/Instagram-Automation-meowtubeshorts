@@ -1,0 +1,52 @@
+
+OPTIMIZED INSTAGRAM AUTOMATION - USER CONTENT GUIDE
+====================================================
+
+PLACE YOUR CONTENT HERE:
+
+1. DROP CAT IMAGES/VIDEOS:
+   - Place any cat photos (.jpg, .png, .gif) in this folder
+   - Place any cat videos (.mp4, .mov) in this folder
+   - The system will automatically post them with AI-generated captions
+
+2. CONTENT SOURCES (Priority Order):
+   Priority 1: Your uploaded files (this folder) - HIGHEST PRIORITY
+   Priority 2: 🎬 VIRAL CAT REELS - Downloaded and posted IMMEDIATELY
+
+3. OPTIMIZED APPROACH:
+   ✅ Posts IMMEDIATELY when even one reel is downloaded (no waiting!)
+   ✅ Downloads one video at a time for fastest posting
+   ✅ Automatically cleans up downloaded viral reel files after posting
+   ✅ Focus on high-quality viral content that performs well
+   ✅ AI generates fresh captions (never copies original captions)
+   ✅ Respects rate limits and Instagram ToS
+
+4. POSTING SCHEDULE:
+   - 9:00 AM - Morning post
+   - 3:00 PM - Afternoon post  
+   - 8:00 PM - Evening post
+   (Total: 3 posts per day - Instagram-friendly frequency)
+
+5. SMART POSTING APPROACH:
+   - Downloads viral reels one by one
+   - Posts immediately when content is ready
+   - No spam-like frequent posting
+   - Respects Instagram's community guidelines
+
+6. AI CAPTIONS:
+   - Each post gets a unique AI-generated caption
+   - Video captions optimized for reels
+   - Includes trending hashtags automatically
+   - Fallback captions if AI fails
+
+7. TESTING MODE:
+   - Currently in TESTING_MODE=True (check .env file)
+   - No actual posting until you set TESTING_MODE=False
+
+8. AUTOMATIC CLEANUP:
+   - Downloaded viral reels are automatically deleted after posting
+   - Keeps your storage clean and organized
+   - Metadata files are also cleaned up
+   - Robust retry logic for Windows file locking
+
+ENJOY YOUR OPTIMIZED VIRAL CAT CONTENT! 🐱🚀✨
