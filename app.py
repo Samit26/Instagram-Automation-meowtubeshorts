@@ -231,8 +231,13 @@ if __name__ == '__main__':
     # Get port from environment variable (Render sets this automatically)
     port = int(os.environ.get('PORT', 5000))
 
+    # Check if running in production (Render) or development
+    is_production = os.environ.get('RENDER') is not None
+
     # Production configuration for Render
     logger.info(f"🚀 Starting Instagram Automation Flask Server on port {port}")
+    logger.info(
+        f"📱 Environment: {'Production (Render)' if is_production else 'Development'}")
     logger.info(f"📱 Service endpoints available:")
     logger.info(f"   GET  / - Health check")
     logger.info(f"   GET/POST /run-task - Execute automation")
@@ -240,8 +245,18 @@ if __name__ == '__main__':
     logger.info(f"   GET  /logs - Recent logs")
 
     # Run Flask app
-    app.run(
-        host='0.0.0.0',  # Required for Render
-        port=port,
-        debug=False  # Set to False for production
-    )
+    if is_production:
+        # In production, this will be handled by Gunicorn via Procfile
+        # But we keep this for fallback
+        app.run(
+            host='0.0.0.0',
+            port=port,
+            debug=False
+        )
+    else:
+        # Development mode
+        app.run(
+            host='0.0.0.0',
+            port=port,
+            debug=True
+        )

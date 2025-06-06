@@ -138,8 +138,10 @@ _Note: This continuously monitors your endpoint, effectively triggering it regul
 2. **Create Web Service**:
 
    - Connect your GitHub repository
+   - **Name**: `instagram-automation-flask` (or your preferred name)
+   - **Environment**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
-   - **Start Command**: `python app.py`
+   - **Start Command**: `gunicorn --bind 0.0.0.0:$PORT app:app`
    - **Environment Variables**: Add your Instagram credentials and API keys
 
 3. **Configure Environment Variables**:
