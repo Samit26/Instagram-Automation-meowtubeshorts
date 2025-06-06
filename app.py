@@ -38,11 +38,14 @@ def get_automation_instance():
     global automation_instance
     if automation_instance is None:
         try:
+            logger.info("🔄 Creating automation instance...")
             automation_instance = EnhancedInstagramAutomation()
             logger.info("✅ Automation instance created successfully")
         except Exception as e:
             logger.error(f"❌ Failed to create automation instance: {e}")
-            raise
+            logger.error(f"Full error details: {traceback.format_exc()}")
+            # Don't raise here - let endpoints handle the error
+            return None
     return automation_instance
 
 
@@ -57,12 +60,74 @@ def home():
         'endpoints': {
             '/': 'Health check',
             '/run-task': 'Execute automation task',
-            '/status': 'Get service status'
+            '/status': 'Get service status',
+            '/logs': 'Get recent logs',
+            '/test': 'Test dependencies'
         }
     })
 
 
-@app.route('/run-task', methods=['GET', 'POST'])
+@app.route('/test', methods=['GET'])
+def test_dependencies():
+    """Test if all dependencies can be imported"""
+    results = {}
+
+    # Test core dependencies
+    try:
+        import flask
+        results['flask'] = f"✅ {flask.__version__}"
+    except Exception as e:
+        results['flask'] = f"❌ {str(e)}"
+
+    try:
+        import requests
+        results['requests'] = f"✅ {requests.__version__}"
+    except Exception as e:
+        results['requests'] = f"❌ {str(e)}"
+
+    try:
+        from enhanced_automation import EnhancedInstagramAutomation
+        results['enhanced_automation'] = "✅ Import successful"
+    except Exception as e:
+        results['enhanced_automation'] = f"❌ {str(e)}"
+
+    try:
+        import instagrapi
+        version = getattr(instagrapi, '__version__', 'version unknown')
+        results['instagrapi'] = f"✅ {version}"
+    except Exception as e:
+        results['instagrapi'] = f"❌ {str(e)}"
+
+    try:
+        import google.generativeai
+        results['google_generativeai'] = "✅ Import successful"
+    except Exception as e:
+        results['google_generativeai'] = f"❌ {str(e)}"
+
+    try:
+        import cv2
+        results['opencv'] = f"✅ {cv2.getVersionString()}"
+    except Exception as e:
+        results['opencv'] = f"❌ {str(e)}"
+
+    # Test environment variables
+    env_vars = {
+        'INSTAGRAM_USERNAME': bool(os.environ.get('INSTAGRAM_USERNAME')),
+        'INSTAGRAM_PASSWORD': bool(os.environ.get('INSTAGRAM_PASSWORD')),
+        'GEMINI_API_KEY': bool(os.environ.get('GEMINI_API_KEY')),
+        'TESTING_MODE': os.environ.get('TESTING_MODE', 'Not Set'),
+        'PORT': os.environ.get('PORT', 'Not Set'),
+    }
+
+    return jsonify({
+        'status': 'test_complete',
+        'dependencies': results,
+        'environment_variables': env_vars,
+        'timestamp': datetime.now().isoformat()
+    })
+
+
+@app.route('/run-task', methods=['GET'])
 def run_task():
     """Execute the Instagram automation task"""
     start_time = datetime.now()
@@ -71,6 +136,13 @@ def run_task():
     try:
         # Get automation instance
         automation = get_automation_instance()
+
+        if automation is None:
+            return jsonify({
+                'status': 'error',
+                'message': '❌ Failed to initialize automation instance',
+                'timestamp': datetime.now().isoformat()
+            }), 500
 
         # Log execution start
         logger.info("📱 Starting Instagram automation task...")
@@ -117,6 +189,14 @@ def get_status():
     try:
         # Check if we can create automation instance
         automation = get_automation_instance()
+
+        if automation is None:
+            return jsonify({
+                'status': 'unhealthy',
+                'service': 'Instagram Automation Web Service',
+                'message': 'Failed to initialize automation instance',
+                'timestamp': datetime.now().isoformat()
+            }), 500
 
         # Get basic status info
         downloads_dir = Path('downloads/videos')
