@@ -96,6 +96,7 @@ The script is now **optimized for external cron job scheduling** and runs perfec
 ### Detailed Instructions
 
 See **`RENDER_CRON_DEPLOYMENT.md`** for complete step-by-step deployment instructions including:
+
 - Environment variable configuration
 - Cron schedule examples
 - Monitoring and troubleshooting

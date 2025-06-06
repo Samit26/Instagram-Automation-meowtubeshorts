@@ -9,4 +9,5 @@ yt-dlp==2023.12.30
 moviepy==1.0.3
 python-dateutil==2.8.2
 flask==2.3.3
+gunicorn==21.2.0
 numpy<2
